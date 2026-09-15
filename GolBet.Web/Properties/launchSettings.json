@@ -1,5 +1,5 @@
 ﻿{
-  "$schema" : "https://acp-protocol.dev/schemas/v1/attempts.schema.json"
+  "$schema": "https://json.schemastore.org/launchsettings.json", 
   "profiles": {
     "http": {
       "commandName": "Project",
@@ -19,6 +19,6 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     }
-   }
   }
+}
     
