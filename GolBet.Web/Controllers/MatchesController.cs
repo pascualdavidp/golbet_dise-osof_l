@@ -11,11 +11,12 @@ public class MatchesController : Controller
 {
     private readonly IMatchService _matchService;
     private readonly ITeamService _teamService;
-    public MatchesController(IMatchService matchService)
+    public MatchesController(IMatchService matchService, ITeamService teamService)
     {
-       _matchService = matchService;
-       _teamService = _teamService;
-    }  
+        _matchService = matchService;
+        _teamService = teamService;
+    }
+
 
     // GET /Matches            -> all matches
     // GET /Matches?status=Scheduled -> filtered board
