@@ -7,6 +7,7 @@ using GolBet.Repositories.Interfaces;
 using GolBet.Services.DTOs;
 using GolBet.Services.Helpers;
 using GolBet.Services.Interfaces;
+using Microsoft.Extensions.Logging;
 
 namespace GolBet.Services.Implementations;
 
@@ -19,15 +20,19 @@ private readonly IBetRepository _betRepository;      // nuevo
 
 private readonly IMapper _mapper;
 
+    private readonly ILogger<MatchService> _logger;  //nuevo
 
 
-public MatchService(
+
+    public MatchService(
 
     IMatchRepository matchRepository,
 
     IBetRepository betRepository,                    // nuevo 
 
-    IMapper mapper)
+    IMapper mapper,
+
+        ILogger<MatchService> logger)   // nuevo
 
 {
 
@@ -36,6 +41,8 @@ public MatchService(
     _betRepository = betRepository;                  // nuevo 
 
     _mapper = mapper;
+
+        _logger = logger;   // nuevo
 
 }
 
@@ -232,9 +239,14 @@ public async Task<ResolutionSummaryDto> CloseMatchAsync(MatchResultFormDto dto)
 
     await _matchRepository.UpdateAsync(match);
 
+        _logger.LogInformation(
+            "Match {MatchId} closed {HomeGoals}-{AwayGoals}: " +
+            "{ResolvedBets} bets resolved, {WonBets} won, {TotalPaid} paid",
+            match.Id, dto.HomeGoals, dto.AwayGoals,
+            summary.ResolvedBets, summary.WonBets, summary.TotalPaid);
 
 
-    return summary;
+        return summary;
 
 }
 
